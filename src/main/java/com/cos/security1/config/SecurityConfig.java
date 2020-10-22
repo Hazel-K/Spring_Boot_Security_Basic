@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.anyRequest().permitAll() // 그 외 나머지 웹페이지는 그냥 접근 가능
 			.and()// http 다시 시작
 			.formLogin() // 로그인 폼을 사용하겠다는 뜻
-			.loginPage("/loginForm"); // 폼을 사용하는 페이지를 설정하겠다는 뜻
+			.loginPage("/loginForm") // 로그인 페이지를 설정
+			.loginProcessingUrl("/login"); // 로그인 프로세스를 설정
 	}
 	
 	/**

@@ -30,6 +30,6 @@ public class User {
 	private String password;
 	private String email;
 	private String role;
-	@CreationTimestamp
+	@CreationTimestamp // 타임스탬프를 자동으로 생성함
 	private Timestamp createDate;
 }

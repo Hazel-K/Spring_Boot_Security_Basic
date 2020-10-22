@@ -11,9 +11,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:8089/security?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
     username: root
-    password: qweasd12!
+    password: koreait2020
     
 #  mustache가 자동으로 잡는 viewResolver 설정.
 #  mvc:
