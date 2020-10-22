@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.and()// http 다시 시작
 			.formLogin() // 로그인 폼을 사용하겠다는 뜻
 			.loginPage("/loginForm") // 로그인 페이지를 설정
-			.loginProcessingUrl("/login"); // 로그인 프로세스를 설정
+			.loginProcessingUrl("/login") // 주소 호출 시 시큐리티가 대신 로그인 진행
+			.defaultSuccessUrl("/"); // 로그인 성공 시 이동할 주소
 	}
 	
 	/**
