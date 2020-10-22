@@ -1,6 +1,7 @@
 package com.cos.security1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,5 +82,12 @@ public class IndexController {
 		user.setPassword(encPassword); // 스프링 시큐리티 비밀번호 엔코더를 이용한 비밀번호 설정
 		userRepository.save(user); // 비밀번호를 암호화하면 시큐리티에서도 로그인이 가능해짐
 		return "redirect:/loginForm"; // redirect하고 싶으면 붙임
+	}
+	
+	// @Secured("ROLE_ADMIN") // 이 메소드는 관리자에게만 허용된다는 의미 EnableSecured 어노테이션 필요, 한 개만 주고 싶을때
+	// @PreAutorize(hasRole('ROLE_MANAGER' or hasRole('ROLE_ADMIN'))) // 이 메소드는 매니저, 관리자에게만 허용된다는 의미 preAuthorize 어노테이션 필요, 여러 개 주고 싶을 때
+	@GetMapping("/info")
+	public @ResponseBody String info() {
+		return "개인정보";
 	}
 }

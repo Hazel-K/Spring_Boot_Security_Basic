@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,7 +21,7 @@ import lombok.Data;
  * Table user와 관련된 VO
  *
  */
-@Entity // 서버 실행 시 해당 클래스와 같은 Table이 자동으로 버려지고 생성된다.
+@Entity // 서버 실행 시 해당 클래스와 같은 Table이 자동으로 생성된다.
 @Data // Getter, Setter 및 toString을 자동으로 생성
 public class User {
 	@Id // 아이디 번호를 자동 생성
