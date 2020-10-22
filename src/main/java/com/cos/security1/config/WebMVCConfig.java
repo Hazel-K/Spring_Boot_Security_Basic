@@ -2,6 +2,8 @@ package com.cos.security1.config;
 
 import org.springframework.boot.web.servlet.view.MustacheViewResolver;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,7 +27,17 @@ public class WebMVCConfig implements WebMvcConfigurer {
 	    resolver.setContentType("text/html;charset=UTF-8"); // 웹페이지 컨텐트 타입 설정
 	    resolver.setPrefix("classpath:/templates/"); // 사전 경로 설정, classpath는 해당 프로젝트의 경로를 의미
 	    resolver.setSuffix(".html"); // 확장자 설정
-
+	    
 	    registry.viewResolver(resolver); // 설정을 바탕으로 viewResolver 실행
 	}
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+	}
+	
+//	@Override
+//	public void addViewControllers(ViewControllerRegistry registry) {
+//		registry.addRedirectViewController("/", "/다른 메인 URL이 따로 있다면 설정하세요");
+//	}
 }
