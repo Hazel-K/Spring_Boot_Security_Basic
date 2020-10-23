@@ -33,4 +33,8 @@ public class User {
 	private String role;
 	@CreationTimestamp // 타임스탬프를 자동으로 생성함
 	private Timestamp createDate;
+	
+	// OAuth2 사용자를 구분을 위한 컬럼
+	private String provider;
+	private String providerId;
 }
