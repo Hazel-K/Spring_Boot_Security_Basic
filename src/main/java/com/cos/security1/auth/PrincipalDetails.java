@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cos.security1.model.User;
 
+import lombok.Data;
+
 /**
  * 
  * @author Hazel_K
@@ -20,6 +22,7 @@ import com.cos.security1.model.User;
  * 즉, Security Session => Authentication => UserDetails 형태로 저장이 된다는 것.
  *
  */
+@Data
 public class PrincipalDetails implements UserDetails{
 	
 	/**

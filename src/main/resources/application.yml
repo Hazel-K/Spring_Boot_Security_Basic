@@ -15,7 +15,7 @@ spring:
     username: root
     password: koreait2020
     
-#  mustache가 자동으로 잡는 viewResolver 설정.
+#  mustache가 자동으로 잡는 viewResolver 설정(이 설정이 자동으로 생성되어 있음).
 #  mvc:
 #    view:
 #      prefix: /templates/
@@ -29,12 +29,12 @@ spring:
     show-sql: true
 
 # oauth2 설정, pom.xml에서 의존성 추가되었는지부터 확인
-# Google API Console에서 Oauth 동의 화면을 눌러 외부 설정, URI를 추가. http://localhost:8080/login/oauth2/code/google
-# 사용자 인증 정보에 적힌 정보들을 아래 설정에 적기    
   security:
     oauth2:
       client:
-        registration:          google:
+        registration:
+          # Google API Console에서 Oauth 동의 화면을 눌러 외부 설정, URI를 추가. http://localhost:8080/login/oauth2/code/google
+          # 사용자 인증 정보에 적힌 정보들을 아래 설정에 적기              google:
             client-id: 691912092566-ur70kvgdooc53907r4i7fcsmdser0n42.apps.googleusercontent.com
             client-secret: SPqT3GxYF1bzg3DArI7_QAez
             scope:            - email
