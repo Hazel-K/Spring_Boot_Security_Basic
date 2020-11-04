@@ -2,9 +2,11 @@ package com.cos.security1.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.cos.security1.model.User;
 
@@ -23,7 +25,7 @@ import lombok.Data;
  *
  */
 @Data
-public class PrincipalDetails implements UserDetails{
+public class PrincipalDetails implements UserDetails, OAuth2User{
 	
 	/**
 	 * 본인이 정한 User 정보를 따로 적어준다.
@@ -36,6 +38,7 @@ public class PrincipalDetails implements UserDetails{
 		this.user = user;
 	}
 	
+	// UserDetails 임플리먼트 메소드
 	/**
 	 * 유저의 설정된 권한을 반환
 	 */
@@ -103,5 +106,18 @@ public class PrincipalDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		// 현재시간 - 로긴시간 = 조건시간이면 로그인 안되게 할 수 있음
 		return true;
+	}
+
+	// OAuth2User 임플리먼트 메소드
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

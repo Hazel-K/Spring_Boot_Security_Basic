@@ -20,7 +20,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 
  * 1. src/main/resources 폴더 아래에 application.properties 확장자를 yml로 변경 후 내용 추가(참고)
  * 2. src/main/java 폴더 아래 controller-IndexController.java에서 계속
- *
+ * 
+ * 2020. 11. 04.
+ * 스프링 시큐리티는 세션 속에 시큐리티가 관리하는 세션이 따로 있다.
+ * 시큐리티 세션에 들어갈 수 있는 타입은 Authentication 객체 뿐이다.
+ * Authentication 를 설정할 수 있는 타입은 UserDetails(일반 로그인), OAuth2User(외부 로그인) 두 객체 뿐이다.
+ * UserDetails와 OAuth2User 두 객체를 구분하는 방법은 가상의 객체 x에 두 객체를 임플리멘테이션받아 Authentication에 담아준다.
+ * 
  */
 @SpringBootApplication
 public class Security1Application {

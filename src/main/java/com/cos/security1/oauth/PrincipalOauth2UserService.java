@@ -23,9 +23,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		System.out.println("userRequest:" + userRequest);
-		System.out.println("userRequest:" + userRequest.getClientRegistration().getRegistrationId()); // 어떤 OAuth로 로그인했는지 확인 가능
-		System.out.println("userRequest:" + userRequest.getAccessToken().getTokenValue());
-		System.out.println(super.loadUser(userRequest).getAttributes());
+		System.out.println("getClientRegistration:" + userRequest.getClientRegistration().getRegistrationId()); // 어떤 OAuth로 로그인했는지 확인 가능
+		System.out.println("getAccessToken:" + userRequest.getAccessToken().getTokenValue()); // 토큰의 값을 받아온다. API요청을 주고받을때 주요 아이템
+		System.out.println("getAttributes:" + super.loadUser(userRequest).getAttributes());
 		
 		OAuth2User oauth2User = super.loadUser(userRequest);
 		return super.loadUser(userRequest);

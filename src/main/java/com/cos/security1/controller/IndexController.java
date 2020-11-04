@@ -1,9 +1,10 @@
 package com.cos.security1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,13 +40,36 @@ public class IndexController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
+	/*
+	 * 세션에 박힌 유저 정보를 확인할 수 있는 두가지 방법
+	 * authentication.getPrincipal(); 메소드는 object 상태로, UserDetails 계열의 클래스로 형변환하여 정보를 가져올 수 있음
+	 * @AuthenticationPrincipal 어노테이션은 현재 세션에 저장되어 있는 UserDetails 계열의 클래스의 정보를 가져올 수 있음
+	 */
 	@GetMapping("/test/login")
-	public @ResponseBody String loginTest(Authentication authentication) {
+	public @ResponseBody String testLogin(Authentication authentication, @AuthenticationPrincipal PrincipalDetails userDetails) { // DI(의존성 주입)
 		System.out.println("================= /test/login =================");
+		// 첫번째 방법
 		PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
-		System.out.println("authentication:" + authentication.getPrincipal());
+		System.out.println("authentication:" + principalDetails.getUser());
+		// 두번째 방법
+		System.out.println("userDetails:" + userDetails.getUser());
 		return "세션 정보 확인하기";
+	}
+	
+	/*
+	 * 세션에 박힌 oauth2 유저 정보를 확인할 수 있는 두가지 방법
+	 * testLogin() 메소드와 원리는 같다.
+	 */
+	@GetMapping("/test/oauth/login")
+	public @ResponseBody String testOauthLogin(Authentication authentication, @AuthenticationPrincipal OAuth2User oauth) {
+		System.out.println("================= /test/oauth/login =================");
+		// 첫번째 방법
+		OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal();
+		System.out.println("authentication:" + oauth2User.getAttributes());
+		// 두번째 방법
+		System.out.println("oauth2User:" + oauth.getAttributes());
+		return "OAuth 세션 정보 확인하기";
 	}
 	
 	@GetMapping({"", "/"})
