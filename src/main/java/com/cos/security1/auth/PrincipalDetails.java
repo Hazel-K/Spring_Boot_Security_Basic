@@ -25,17 +25,24 @@ import lombok.Data;
  *
  */
 @Data
-public class PrincipalDetails implements UserDetails, OAuth2User{
+public class PrincipalDetails implements UserDetails, OAuth2User{ // 일반 로그인과 OAuth2 로그인을 동시에 지원하기 위해 둘 다 임플리멘테이션을 진행
 	
 	/**
 	 * 본인이 정한 User 정보를 따로 적어준다.
 	 * 필드와 함께 기본 생성자도 함께 만든다.
 	 */
-	private User user;
+	private User user; // 일반 로그인 시 활용할 클래스를 지정
+	private Map<String, Object> attributes; // OAuth2User.getAttributes() 실행 시 리턴 타입이 Map이므로 멤버필드로 생성
 	
 	public PrincipalDetails(User user) {
 		// TODO Auto-generated constructor stub
 		this.user = user;
+	}
+	
+	public PrincipalDetails(User user, Map<String, Object> attributes) { // OAuth2 로그인을 위한 생성자
+		// TODO Auto-generated constructor stub
+		this.user = user;
+		this.attributes = attributes;
 	}
 	
 	// UserDetails 임플리먼트 메소드
@@ -112,7 +119,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 	@Override
 	public Map<String, Object> getAttributes() {
 		// TODO Auto-generated method stub
-		return null;
+		return attributes;
 	}
 
 	@Override

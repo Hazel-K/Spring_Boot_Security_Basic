@@ -68,7 +68,7 @@ public class IndexController {
 		OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal();
 		System.out.println("authentication:" + oauth2User.getAttributes());
 		// 두번째 방법
-		System.out.println("oauth2User:" + oauth.getAttributes());
+		System.out.println("oauth2User:" + oauth.getAttributes()); // getAttributes들은 Map<key String, vlaue Object>자료형으로 저장되어 있음
 		return "OAuth 세션 정보 확인하기";
 	}
 	
@@ -78,10 +78,13 @@ public class IndexController {
 	}
 	
 	/**
-	 * @ResponseBody 어노테이션은 해당 return 값을 웹페이지와 연결시키는 게 아니라, 바로 웹페이지에 동적으로 표시하기 위해 하는 것 
+	 * @ResponseBody 어노테이션은 해당 return 값을 웹페이지와 연결시키는 게 아니라, 바로 웹페이지에 동적으로 표시하기 위해 하는 것
+	 * 일반 로그인, OAuth2 로그인 할 것 없이 한 객체로 정보를 받는 것이 가능해짐
+	 * 이 경우 굳이 UserDetails와 OAuth2User로 나누어 Object를 각각의 클래스로 다운캐스팅해야 하는 수고가 줄어든다.
 	 */
 	@GetMapping("/user")
-	public @ResponseBody String user() {
+	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		System.out.println("principalDetails:" + principalDetails.getUser());
 		return "user";
 	}
 	
@@ -109,13 +112,13 @@ public class IndexController {
 	
 	@PostMapping("/join")
 	public String join(User user) {
-		// System.out.println(user);
+		System.out.println(user);
 		user.setRole("ROLE_USER"); // 해당 회원의 권한 설정
 		String rawPassword = user.getPassword();
 		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
 		user.setPassword(encPassword); // 스프링 시큐리티 비밀번호 엔코더를 이용한 비밀번호 설정
 		userRepository.save(user); // 비밀번호를 암호화하면 시큐리티에서도 로그인이 가능해짐
-		return "redirect:/loginForm"; // redirect하고 싶으면 붙임
+		return "redirect:/loginForm"; // redirect하고 싶으면 redirect:붙임
 	}
 	
 	// @Secured("ROLE_ADMIN") // 이 메소드는 관리자에게만 허용된다는 의미 EnableSecured 어노테이션 필요, 한 개만 주고 싶을때
