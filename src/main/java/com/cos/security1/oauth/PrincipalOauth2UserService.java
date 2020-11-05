@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.cos.security1.auth.PrincipalDetails;
 import com.cos.security1.model.User;
+import com.cos.security1.oauth.provider.FacebookUserInfo;
+import com.cos.security1.oauth.provider.GoogleUserInfo;
+import com.cos.security1.oauth.provider.OAuth2UserInfo;
 import com.cos.security1.repository.UserRepository;
 
 /**
@@ -38,19 +41,31 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 	 */
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-		System.out.println("userRequest:" + userRequest);
+//		System.out.println("userRequest:" + userRequest);
 		System.out.println("getClientRegistration:" + userRequest.getClientRegistration().getRegistrationId()); // 어떤 OAuth로 로그인했는지 확인 가능
 		System.out.println("getAccessToken:" + userRequest.getAccessToken().getTokenValue()); // 토큰의 값을 받아온다. API요청을 주고받을때 주요 아이템
 		
 		OAuth2User oauth2User = super.loadUser(userRequest);
 		System.out.println("getAttributes:" + super.loadUser(userRequest).getAttributes());
 		
-		// oauth2user 정보 강제로 받기
-		String provider = userRequest.getClientRegistration().getClientId(); // google
-		String providerId = oauth2User.getAttribute("sub"); // sub
+		// 로그인 요청에 따라 분기를 나눔
+		OAuth2UserInfo oAuth2UserInfo = null;
+		if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+			System.out.println("구글 로그인 요청");
+			oAuth2UserInfo = new GoogleUserInfo(oauth2User.getAttributes());
+		} else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+			System.out.println("페이스북 로그인 요청");
+			oAuth2UserInfo = new FacebookUserInfo(oauth2User.getAttributes());
+		} else {
+			System.out.println("우리는 구글과 페이스북만 지원합니다.");
+		}
+		
+		// 위에서 걸러진 정보를 각 값에 저장
+		String provider = oAuth2UserInfo.getProvider();
+		String providerId = oAuth2UserInfo.getProviderId();
 		String username = provider + "_" + providerId; // google_sub
 		String password = bCryptPasswordEncoder.encode("겟인데어");
-		String email = oauth2User.getAttribute("email");
+		String email = oAuth2UserInfo.getEmail();
 		String role = "ROLE_USER";
 		
 		// 가져온 정보가 이미 있는 회원인지를 비교

@@ -39,3 +39,12 @@ spring:
             client-secret: SPqT3GxYF1bzg3DArI7_QAez
             scope:            - email
             - profile
+          # 라인 맞춰야됨에 주의
+          # facebook API Console에서 앱<기타>로 만든 후 기본 설정에서 URI를 추가. http://localhost:8080
+          # 제공하는 scope 이름을 정확하게 입력해야 함
+          facebook:
+            client-id: 356732122221705
+            client-secret: 844ac07cd60a9a9ee9e05cd79e2092d1
+            scope:
+            - email
+            - public_profile
