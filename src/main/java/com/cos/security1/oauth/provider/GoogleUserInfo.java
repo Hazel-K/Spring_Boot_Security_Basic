@@ -9,7 +9,7 @@ public class GoogleUserInfo implements OAuth2UserInfo{
 	public GoogleUserInfo(Map<String, Object> attributes) {
 		this.attributes = attributes;
 	}
-	
+
 	@Override
 	public String getProviderId() {
 		// TODO Auto-generated method stub
@@ -33,5 +33,5 @@ public class GoogleUserInfo implements OAuth2UserInfo{
 		// TODO Auto-generated method stub
 		return (String)attributes.get("name");
 	}
-	
+
 }
